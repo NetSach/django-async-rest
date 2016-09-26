@@ -1,0 +1,79 @@
+body {
+    font-size: 200%;
+    text-align: center;
+    font-family: "Century Gothic", sans-serif;
+    padding:35px 0px;
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-position: bottom 40px right 10px;
+}
+
+body::before, body::after{
+    content:"";
+    background-color:#002650;
+    height:30px;
+    width:100%;
+    position:absolute;
+    left:0px;
+}
+
+body::before{
+    top:0px;
+}
+
+body::after{
+    bottom:0px;
+}
+
+p {
+    font-weight: normal;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    text-align: left;
+}
+
+pre {
+    text-align: left;
+    background-color: #DDD;
+    padding: 8px;
+    border: 1px solid #BBB;
+    border-radius: 5px;
+}
+
+h1, h2, h3, h4 {
+    font-weight: normal;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+}
+
+tt {
+    font-size: 125;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+li {
+    font-weight: normal;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    padding-left: 0.5em;
+    line-height: 1.8em;
+    text-align: left;
+}
+
+a {
+    text-decoration: underline;
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.step {
+    width: 1024px;
+}

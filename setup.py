@@ -30,6 +30,7 @@ setup(
     author_email='pa.schembri@netsach.com',
     packages=find_packages('src'),
     package_dir={'': 'src'},
+    url='https://github.com/Netsach/django-async-rest',
     include_package_data=True,
     install_requires=get_requirements(os.path.join(ROOT, 'requirements.txt'))
 )

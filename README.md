@@ -1,3 +1,4 @@
 # django-async-rest
 
-See docs/slides
+See docs/index.rst
+See docs/slides/*

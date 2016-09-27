@@ -1,0 +1,5 @@
+pytz>=2015
+django>=1.8
+django-jsonfield==1.0.1
+djangorestframework>=3.3
+sphinxcontrib-httpdomain>=1.5

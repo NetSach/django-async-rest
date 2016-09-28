@@ -28,7 +28,7 @@ Sommaire
 
 - REST, resources et actions
 - Starbucks Paradigm
-- Présentation et intégration
+- Présentation et intégration de django-async-rest
 - Exemple concret & retours d'expérience
 
 
@@ -77,18 +77,18 @@ Solutions...
 
 - HTTP Long polling
 - [Web]sockets
-- Callbacks, asyncio, async & await
+- Event loop, asyncio, async & await
 - ...
 
 
-... non satisfaisantes
-======================
+... trop contraignantes
+=======================
 
 ----
 
-***********
-Task queues
-***********
+*******************************
+Solution élégante : Task queues
+*******************************
 
 - Celery
 - RQ
@@ -97,14 +97,14 @@ Task queues
 REST ? :
 
 - ``celery.task.http`` : webhooks ?
-- ?
+- RQ ? Autres ?
 
 
 ----
 
-********
-REST !!!
-********
+********************
+Intégration REST !!!
+********************
 
 
 ----
@@ -112,6 +112,9 @@ REST !!!
 ******************
 Starbucks Paradigm
 ******************
+
+REST appliquée à la vie réelle
+==============================
 
 ----
 
@@ -122,12 +125,12 @@ Starbucks Paradigm
 ou comment appliquer REST dans le monde réel...
 
 1. Commande d'un café (order)
-2. Attente...
+2. Attente... (café en cours de production, running task)
 3. Où en est-on ? (polling)
 4. Livraison du café (callback / polling)
 
 
-`Référence : "REST In practice (978-0596805821)" <https://www.amazon.com/REST-Practice-Hypermedia-Systems-Architecture/dp/0596805829>`_
+    Référence : "REST In practice (ISBN : 978-0596805821)"
 
 ----
 
@@ -138,8 +141,8 @@ Proposition d'un workflow REST (1/2)
 
 1. Commande d'une pizza : ``POST /regina/order``
 2. ``POST => 302 => location: /orders/be7aa21c/``
-3. Attente... la pizza est au four...
-4. Où en est-on ? ... livreur en route...
+3. Attente... msg = 'la pizza est au four...'
+4. Où en est-on ? ... msg = 'livreur en route...'
 
 ----
 
@@ -148,18 +151,22 @@ Proposition d'un workflow REST (2/2)
 ************************************
 
 
-.. code:: text
+.. code:: http
 
-    #1 GET /orders/be7aa21c/
+    GET /orders/be7aa21c/ HTTP/1.1
+
     HTTP/1.1 202 ACCEPTED
-    Order : regina
-            status : queued
+    order : regina
+    status : queued
 
-    #2 GET /orders/be7aa21c/
+.. code:: http
+
+    GET /orders/be7aa21c/ HTTP/1.1
+
     HTTP/1.1 201 CREATED
-    Order : regina
-            resource-url : /regina/ca4a5619/
-            status : completed
+    order : regina
+    resource-url : /regina/ca4a5619/
+    status : completed
 
 
 ----
@@ -213,16 +220,14 @@ Intégration
 Génération des endpoints
 ========================
 
-Création automatique des endpoints :
+Création automatique des endpoints accessible via tout type de client HTTP (javascript in-browser, curl, requests, ...)
 
 .. code:: text
 
     /async/regina/order/ [POST only]
     /async/<resource-name>/order/ [POST only]
     /async/orders/<uuid>/ [GET only]
-    /async/<resources>/<uuid>/ [GET only]
 
-Accessible via JS / Client HTTP (Curl) / ...
 
 ----
 
@@ -233,8 +238,10 @@ Helpers
 
 .. code:: python
 
-    with fail_on_error(order, 'No more pizza'):
+    with fail_on_error(order, 'No more ingredients'):
         pizza_kind = order.resource_name
+
+        # may raise exceptions
         ingredients = retrieve_ingredients(pizza_kind)
         ...
 
@@ -337,9 +344,9 @@ Retours d'expérience
 Roadmap
 *******
 
-- Passage sous licence libre
 - Découplage Django / DRF
 - Ajout du mécanisme de callback
+- Améliorer compatibilité Py3
 - Ajout d'autres helpers (``post_on_completion``, ...)
 - contact : pa.schembri@netsach.com
 
@@ -356,5 +363,6 @@ Q & A
 
 
 - We're hiring !
-- website : http://netsach.com
-- contact : pa.schembri@netsach.com
+- Projet : https://github.com/Netsach/django-async-rest
+- Website : http://netsach.com
+- Contact : pa.schembri@netsach.com

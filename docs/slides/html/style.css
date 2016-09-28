@@ -3,7 +3,7 @@ body {
     text-align: center;
     font-family: "Century Gothic", sans-serif;
     padding:35px 0px;
-    background-image: url('../img/logo.png');
+    background-image: url('logo.png');
     background-repeat: no-repeat;
     background-position: right bottom;
     background-position: bottom 40px right 10px;
@@ -57,8 +57,8 @@ ul {
 
 li {
     font-weight: normal;
-    margin-bottom: 0.3em;
-    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
     padding-left: 0.5em;
     line-height: 1.8em;
     text-align: left;

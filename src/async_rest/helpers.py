@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import, print_function
-import StringIO
+import io
 import traceback
 import contextlib
 import django.db
@@ -20,7 +20,7 @@ def fail_on_error(order, msg, status='failed'):
         yield
 
     except Exception:
-        msg_fp = StringIO.StringIO()
+        msg_fp = io.StringIO.StringIO()
         traceback.print_exc(file=msg_fp)
 
         with django.db.transaction.atomic():

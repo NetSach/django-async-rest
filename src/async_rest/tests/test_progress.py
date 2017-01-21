@@ -33,7 +33,7 @@ class ProgressTestSuite(test.APITestCase):
         self.assertEqual(order.progress, 0.0)
 
         check = 0
-        with ProgressItems(order, xrange(length), length=length) as items:
+        with ProgressItems(order, range(length), length=length) as items:
             for item in items:
                 self.assertEqual(item, check)
                 self.assertAlmostEqual(Order.objects.first().progress, check*0.1)
